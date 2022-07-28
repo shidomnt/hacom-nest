@@ -1,34 +1,44 @@
 import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
-import { Model } from 'mongoose';
-import { ProductDocument } from 'src/products/schemas/product.schema';
+import mongoose, { Model } from 'mongoose';
 import { CreateCategoryDto } from './dto/create-category.dto';
 import { UpdateCategoryDto } from './dto/update-category.dto';
-import { Category } from './schemas/category.schema';
+import { Category, CategoryDocument } from './schemas/category.schema';
 
 @Injectable()
 export class CategoriesService {
   constructor(
-    @InjectModel(Category.name) private categoryModel: Model<ProductDocument>,
+    @InjectModel(Category.name) private categoryModel: Model<CategoryDocument>,
   ) {}
 
-  create(createCategoryDto: CreateCategoryDto) {
-    return 'This action adds a new category';
+  async create(createCategoryDto: CreateCategoryDto) {
+    const createdCategory = new this.categoryModel(createCategoryDto);
+    return createdCategory.save();
   }
 
   findAll() {
-    return `This action returns all categories`;
+    const categories = this.categoryModel.find({});
+    return categories;
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} category`;
+  findOne(id: mongoose.Schema.Types.ObjectId) {
+    const category = this.categoryModel.findById(id);
+    return category;
   }
 
-  update(id: number, updateCategoryDto: UpdateCategoryDto) {
-    return `This action updates a #${id} category`;
+  update(
+    id: mongoose.Schema.Types.ObjectId,
+    updateCategoryDto: UpdateCategoryDto,
+  ) {
+    const oldCategory = this.categoryModel.findByIdAndUpdate(
+      id,
+      updateCategoryDto,
+    );
+    return oldCategory;
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} category`;
+  remove(id: mongoose.Schema.Types.ObjectId) {
+    const deletedCategory = this.categoryModel.findByIdAndDelete(id);
+    return deletedCategory;
   }
 }

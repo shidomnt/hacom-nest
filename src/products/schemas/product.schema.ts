@@ -4,54 +4,58 @@ import { Category } from 'src/categories/schemas/category.schema';
 
 export type ProductDocument = Product & Document;
 
-@Schema()
+@Schema({ timestamps: true })
 export class Product {
-  @Prop()
+  @Prop({ required: true })
   id: string;
 
   @Prop()
   originalUrl: string;
 
-  @Prop()
+  @Prop({ required: true })
   imgSrc: string;
 
-  @Prop()
+  @Prop({ required: true })
   rate: number;
 
-  @Prop()
+  @Prop({ required: true })
   name: string;
 
-  @Prop({ type: mongoose.Schema.Types.ObjectId, ref: 'Category' })
+  @Prop({
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'Category',
+    required: true,
+  })
   category: Category;
 
-  @Prop()
+  @Prop({ required: true })
   maxPrice: number;
 
-  @Prop()
+  @Prop({ required: true })
   price: number;
 
-  @Prop()
+  @Prop({ required: true })
   discount: string;
 
-  @Prop()
+  @Prop({ required: true })
   action: string;
 
-  // @Prop()
-  // tskt: Record<string, string>;
+  @Prop({ type: Object, required: true })
+  tskt: Record<string, string>;
 
-  @Prop()
+  @Prop({ required: true })
   tssp: Array<string>;
 
-  @Prop()
+  @Prop({ required: true })
   uudai: Array<string>;
 
-  @Prop()
+  @Prop({ required: true })
   gallery: Array<string>;
 
-  @Prop()
+  @Prop({ required: true })
   baohanh: string;
 
-  @Prop()
+  @Prop({ required: true })
   vat: boolean;
 
   @Prop(
