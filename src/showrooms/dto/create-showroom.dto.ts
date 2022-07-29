@@ -16,4 +16,6 @@ export class CreateShowroomDto {
   openTime: string;
 
   city: string;
+
+  isNew: boolean;
 }

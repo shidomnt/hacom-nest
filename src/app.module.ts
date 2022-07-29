@@ -6,6 +6,7 @@ import { CategoriesModule } from './categories/categories.module';
 import { ShowroomsModule } from './showrooms/showrooms.module';
 import { MongooseModule } from '@nestjs/mongoose';
 import { ConfigModule } from '@nestjs/config';
+import { CatalogsModule } from './catalogs/catalogs.module';
 
 @Module({
   imports: [
@@ -18,6 +19,7 @@ import { ConfigModule } from '@nestjs/config';
     ProductsModule,
     CategoriesModule,
     ShowroomsModule,
+    CatalogsModule,
   ],
   controllers: [AppController],
   providers: [AppService],

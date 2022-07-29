@@ -31,6 +31,9 @@ export class Showroom {
 
   @Prop()
   city: string;
+
+  @Prop()
+  isNew: boolean;
 }
 
 export const ShowroomSchema = SchemaFactory.createForClass(Showroom);

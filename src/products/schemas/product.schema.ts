@@ -37,7 +37,7 @@ export class Product {
   @Prop()
   stockStatus: boolean;
 
-  @Prop({ type: Object, required: true })
+  @Prop({ type: Object })
   tskt: Record<string, string>;
 
   @Prop()
