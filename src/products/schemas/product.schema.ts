@@ -6,19 +6,19 @@ export type ProductDocument = Product & Document;
 
 @Schema({ timestamps: true })
 export class Product {
-  @Prop({ required: true })
+  @Prop()
   id: string;
 
   @Prop()
   originalUrl: string;
 
-  @Prop({ required: true })
+  @Prop()
   imgSrc: string;
 
-  @Prop({ required: true })
+  @Prop()
   rate: number;
 
-  @Prop({ required: true })
+  @Prop()
   name: string;
 
   @Prop({
@@ -28,34 +28,31 @@ export class Product {
   })
   category: Category;
 
-  @Prop({ required: true })
+  @Prop()
   maxPrice: number;
 
-  @Prop({ required: true })
+  @Prop()
   price: number;
 
-  @Prop({ required: true })
-  discount: string;
-
-  @Prop({ required: true })
-  action: string;
+  @Prop()
+  stockStatus: boolean;
 
   @Prop({ type: Object, required: true })
   tskt: Record<string, string>;
 
-  @Prop({ required: true })
+  @Prop()
   tssp: Array<string>;
 
-  @Prop({ required: true })
+  @Prop()
   uudai: Array<string>;
 
-  @Prop({ required: true })
+  @Prop()
   gallery: Array<string>;
 
-  @Prop({ required: true })
+  @Prop()
   baohanh: string;
 
-  @Prop({ required: true })
+  @Prop()
   vat: boolean;
 
   @Prop(

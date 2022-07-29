@@ -5,16 +5,19 @@ import { ProductsModule } from './products/products.module';
 import { CategoriesModule } from './categories/categories.module';
 import { ShowroomsModule } from './showrooms/showrooms.module';
 import { MongooseModule } from '@nestjs/mongoose';
+import { ConfigModule } from '@nestjs/config';
 
 @Module({
   imports: [
+    ConfigModule.forRoot({
+      isGlobal: true,
+    }),
+    MongooseModule.forRoot(
+      `mongodb+srv://${process.env.DB_USERNAME}:${process.env.DB_PASSWORD}@cluster0.7ljnw.mongodb.net/${process.env.DB_NAME}?retryWrites=true&w=majority`,
+    ),
     ProductsModule,
     CategoriesModule,
     ShowroomsModule,
-    MongooseModule.forRoot(
-      'mongodb+srv://root:123456aA@cluster0.7ljnw.mongodb.net/hacom?retryWrites=true&w=majority',
-      { dbName: 'hacom' },
-    ),
   ],
   controllers: [AppController],
   providers: [AppService],

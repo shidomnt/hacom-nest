@@ -13,9 +13,9 @@ export class CreateProductDto {
 
   price: number;
 
-  discount: string;
+  stockStatus: boolean;
 
-  action: string;
+  category: string;
 
   tskt: Record<string, string>;
 

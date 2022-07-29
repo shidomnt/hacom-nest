@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
-import mongoose, { Model } from 'mongoose';
+import { Model } from 'mongoose';
 import { CreateProductDto } from './dto/create-product.dto';
 import { UpdateProductDto } from './dto/update-product.dto';
 import { Product, ProductDocument } from './schemas/product.schema';
@@ -11,14 +11,8 @@ export class ProductsService {
     @InjectModel(Product.name) private productModel: Model<ProductDocument>,
   ) {}
 
-  create(
-    createProductDto: CreateProductDto,
-    category: mongoose.Schema.Types.ObjectId,
-  ) {
-    const createdProduct = new this.productModel({
-      ...createProductDto,
-      category,
-    });
+  create(createProductDto: CreateProductDto) {
+    const createdProduct = new this.productModel(createProductDto);
     return createdProduct.save();
   }
 
