@@ -22,7 +22,7 @@ export class ProductsService {
     return createdProduct.save();
   }
 
-  async findAll(query: QueryProduct) {
+  async findAll(query: Partial<QueryProduct>) {
     let products = this.productModel.find({});
     const { categorySlug, limit = 8, rate, page, ...restQueryKey } = query;
     if (categorySlug) {
