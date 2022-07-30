@@ -16,8 +16,12 @@ export class CategoriesService {
     return createdCategory.save();
   }
 
-  findAll() {
-    const categories = this.categoryModel.find({});
+  findAll(query: Category) {
+    let categories = this.categoryModel.find({});
+    const { slug } = query;
+    if (slug) {
+      categories = categories.where('slug', slug);
+    }
     return categories;
   }
 

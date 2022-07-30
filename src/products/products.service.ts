@@ -23,10 +23,26 @@ export class ProductsService {
   }
 
   async findAll(query: QueryProduct) {
-    const { categorySlug } = query;
-    const category = await this.categoryModel.findOne({ slug: categorySlug });
-    const products = this.productModel.find({ category: category?._id });
-    return products.limit(7);
+    let products = this.productModel.find({});
+    const { categorySlug, limit = 8, rate, page, ...restQueryKey } = query;
+    if (categorySlug) {
+      const category = await this.categoryModel.findOne({ slug: categorySlug });
+      products = products.where('category', category._id);
+    }
+    if (rate) {
+      products = products.where('rate', rate);
+    }
+    if (page) {
+      products = products.skip(Math.max(page - 1, 0) * limit);
+    }
+    if (limit) {
+      products = products.limit(limit);
+    }
+    Object.keys(restQueryKey).map((queryKey) => {
+      const pattern = new RegExp(String(query[queryKey]), 'gi');
+      products = products.where(queryKey, pattern);
+    });
+    return products;
   }
 
   findOne(id: string) {
