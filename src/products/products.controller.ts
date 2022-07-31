@@ -22,8 +22,13 @@ export class ProductsController {
     return this.productsService.create(createProductDto);
   }
 
+  @Get('count')
+  count(@Query() query: Pick<QueryProduct, 'categorySlug'>) {
+    return this.productsService.count(query);
+  }
+
   @Get()
-  findAll(@Query() query: QueryProduct) {
+  findAll(@Query() query: Partial<QueryProduct>) {
     return this.productsService.findAll(query);
   }
 

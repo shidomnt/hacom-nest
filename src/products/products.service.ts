@@ -22,9 +22,26 @@ export class ProductsService {
     return createdProduct.save();
   }
 
+  async count(query: Pick<QueryProduct, 'categorySlug'>) {
+    let productCount = this.productModel.countDocuments();
+    const { categorySlug } = query;
+    if (categorySlug) {
+      const category = await this.categoryModel.findOne({ slug: categorySlug });
+      productCount = productCount.where('category', category?._id);
+    }
+    return productCount;
+  }
+
   async findAll(query: Partial<QueryProduct>) {
     let products = this.productModel.find({});
-    const { categorySlug, limit = 8, page, stockStatus, priceRange } = query;
+    const {
+      categorySlug,
+      name,
+      limit = 8,
+      page,
+      stockStatus,
+      priceRange,
+    } = query;
     if (categorySlug) {
       const category = await this.categoryModel.findOne({ slug: categorySlug });
       products = products.where('category', category._id);
@@ -43,6 +60,10 @@ export class ProductsService {
     }
     if (limit) {
       products = products.limit(limit);
+    }
+    if (name) {
+      const namePattern = new RegExp(name, 'gi');
+      products = products.where('name', namePattern);
     }
     return products;
   }
