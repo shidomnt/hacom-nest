@@ -65,4 +65,7 @@ export class Product {
   danhgia: Record<string, Array<string>>;
 }
 
-export const ProductSchema = SchemaFactory.createForClass(Product);
+export const ProductSchema = SchemaFactory.createForClass(Product).index({
+  name: 'text',
+  id: 'text',
+});

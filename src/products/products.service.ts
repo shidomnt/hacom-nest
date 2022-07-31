@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
-import { Model } from 'mongoose';
+import { Model, Query } from 'mongoose';
 import {
   Category,
   CategoryDocument,
@@ -22,26 +22,20 @@ export class ProductsService {
     return createdProduct.save();
   }
 
-  async count(query: Pick<QueryProduct, 'categorySlug'>) {
-    let productCount = this.productModel.countDocuments();
-    const { categorySlug } = query;
-    if (categorySlug) {
-      const category = await this.categoryModel.findOne({ slug: categorySlug });
-      productCount = productCount.where('category', category?._id);
-    }
-    return productCount;
+  textSearch(searchString: string) {
+    const products = this.productModel
+      .find({
+        $text: { $search: searchString },
+      })
+      .limit(6);
+    return products;
   }
 
-  async findAll(query: Partial<QueryProduct>) {
-    let products = this.productModel.find({});
-    const {
-      categorySlug,
-      name,
-      limit = 8,
-      page,
-      stockStatus,
-      priceRange,
-    } = query;
+  private async handleQuery<ResultType, DocType, THelpers, RawDocType>(
+    products: Query<ResultType, DocType, THelpers, RawDocType>,
+    query: Partial<QueryProduct>,
+  ): Promise<Query<ResultType, DocType, THelpers, RawDocType>> {
+    const { categorySlug, name, limit, page, stockStatus, priceRange } = query;
     if (categorySlug) {
       const category = await this.categoryModel.findOne({ slug: categorySlug });
       products = products.where('category', category._id);
@@ -66,6 +60,18 @@ export class ProductsService {
       products = products.where('name', namePattern);
     }
     return products;
+  }
+
+  async count(query: Partial<QueryProduct>) {
+    const productCount = this.productModel.countDocuments();
+    const result = await this.handleQuery(productCount, query);
+    return result;
+  }
+
+  async findAll(query: Partial<QueryProduct>) {
+    const products = this.productModel.find({});
+    const result = await this.handleQuery(products, query);
+    return result;
   }
 
   findOne(id: string) {
