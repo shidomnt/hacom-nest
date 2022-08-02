@@ -6,6 +6,6 @@ async function bootstrap() {
   app.enableCors({
     origin: 'https://hacom-123.netlify.app/',
   });
-  await app.listen(5000);
+  await app.listen(process.env.PORT || 5000);
 }
 bootstrap();
