@@ -20,6 +20,9 @@ export class RoleGuard implements CanActivate {
     }
     const request = context.switchToHttp().getRequest<Request>();
     const authorizationHeader = request.header('authorization');
+    if (!authorizationHeader) {
+      return false;
+    }
     const bearerToken = authorizationHeader.split(' ')[1];
     const secretToken = this.configService.get('SECRET_TOKEN');
     return bearerToken === secretToken;
