@@ -7,6 +7,8 @@ import { ShowroomsModule } from './showrooms/showrooms.module';
 import { MongooseModule } from '@nestjs/mongoose';
 import { ConfigModule } from '@nestjs/config';
 import { CatalogsModule } from './catalogs/catalogs.module';
+import { APP_GUARD } from '@nestjs/core';
+import { RoleGuard } from './guards/role.guard';
 
 @Module({
   imports: [
@@ -22,6 +24,12 @@ import { CatalogsModule } from './catalogs/catalogs.module';
     CatalogsModule,
   ],
   controllers: [AppController],
-  providers: [AppService],
+  providers: [
+    AppService,
+    {
+      provide: APP_GUARD,
+      useClass: RoleGuard,
+    },
+  ],
 })
 export class AppModule {}

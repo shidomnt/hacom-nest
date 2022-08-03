@@ -9,6 +9,7 @@ import {
   Query,
 } from '@nestjs/common';
 import mongoose from 'mongoose';
+import { Roles } from 'src/decorators/roles.decorator';
 import { CategoriesService } from './categories.service';
 import { CreateCategoryDto } from './dto/create-category.dto';
 import { UpdateCategoryDto } from './dto/update-category.dto';
@@ -19,6 +20,7 @@ export class CategoriesController {
   constructor(private readonly categoriesService: CategoriesService) {}
 
   @Post()
+  @Roles('admin')
   create(@Body() createCategoryDto: CreateCategoryDto) {
     return this.categoriesService.create(createCategoryDto);
   }
@@ -34,6 +36,7 @@ export class CategoriesController {
   }
 
   @Patch(':id')
+  @Roles('admin')
   update(
     @Param('id') id: mongoose.Schema.Types.ObjectId,
     @Body() updateCategoryDto: UpdateCategoryDto,
@@ -42,6 +45,7 @@ export class CategoriesController {
   }
 
   @Delete(':id')
+  @Roles('admin')
   remove(@Param('id') id: mongoose.Schema.Types.ObjectId) {
     return this.categoriesService.remove(id);
   }
