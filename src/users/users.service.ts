@@ -19,7 +19,16 @@ export class UsersService {
       ...createUserDto,
       password: hashedPassword,
     });
-    return createdUser.save();
+    try {
+      await createdUser.save();
+      return {
+        success: true,
+      };
+    } catch (e) {
+      return {
+        success: false,
+      };
+    }
   }
 
   findOne(email: User['email']) {

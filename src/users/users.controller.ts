@@ -16,6 +16,10 @@ export class UsersController {
   @UseGuards(JwtAuthGuard)
   @Get('profile')
   getProfile(@Req() req: Request & { user: Omit<UserDocument, 'password'> }) {
-    return req.user;
+    return {
+      success: true,
+      message: '',
+      data: req.user,
+    };
   }
 }
