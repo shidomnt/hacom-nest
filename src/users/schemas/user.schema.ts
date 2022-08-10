@@ -5,7 +5,7 @@ export type UserDocument = User & Document;
 
 @Schema({ timestamps: true })
 export class User {
-  @Prop({ required: true, default: 'Anonymous' })
+  @Prop({ required: true, default: 'Anonymous', maxlength: 30 })
   name: string;
 
   @Prop()

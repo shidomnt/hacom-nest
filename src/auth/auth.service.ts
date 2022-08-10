@@ -1,6 +1,8 @@
 import { Injectable } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
+import { Request } from 'express';
 import { BcryptService } from 'src/bcrypt/bcrypt.service';
+import { ReqWithPassPort } from 'src/types/ReqWithPassPort.type';
 import { User, UserDocument } from 'src/users/schemas/user.schema';
 import { UsersService } from 'src/users/users.service';
 import { JwtPayLoad } from './interfaces/jwtPayLoad.interface';
@@ -23,7 +25,7 @@ export class AuthService {
     return null;
   }
 
-  async login(user: Omit<UserDocument, 'password'>) {
+  async login(user: ReqWithPassPort<Request>['user']) {
     const payload: JwtPayLoad = {
       email: user.email,
       sub: user._id,

@@ -1,6 +1,6 @@
 import { Controller, Post, Req, UseGuards } from '@nestjs/common';
 import { Request } from 'express';
-import { UserDocument } from 'src/users/schemas/user.schema';
+import { ReqWithPassPort } from 'src/types/ReqWithPassPort.type';
 import { AuthService } from './auth.service';
 import { LocalAuthGuard } from './local-auth.guard';
 
@@ -12,9 +12,7 @@ export class AuthController {
   @Post('login')
   async login(
     @Req()
-    req: Request & {
-      user: Omit<UserDocument, 'password'>;
-    },
+    req: ReqWithPassPort<Request>,
   ) {
     return this.authService.login(req.user);
   }

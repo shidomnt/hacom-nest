@@ -10,6 +10,7 @@ import { CatalogsModule } from './catalogs/catalogs.module';
 import { UsersModule } from './users/users.module';
 import { AuthModule } from './auth/auth.module';
 import { BcryptModule } from './bcrypt/bcrypt.module';
+import { CartsModule } from './carts/carts.module';
 
 @Module({
   imports: [
@@ -26,6 +27,7 @@ import { BcryptModule } from './bcrypt/bcrypt.module';
     UsersModule,
     AuthModule,
     BcryptModule,
+    CartsModule,
   ],
   controllers: [AppController],
   providers: [AppService],
