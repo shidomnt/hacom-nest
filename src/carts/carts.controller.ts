@@ -29,7 +29,7 @@ export class CartsController {
     return {
       success: true,
       message: '',
-      data: cart.content,
+      data: cart?.content ?? [],
     };
   }
 
