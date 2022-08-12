@@ -11,6 +11,7 @@ import { UsersModule } from './users/users.module';
 import { AuthModule } from './auth/auth.module';
 import { BcryptModule } from './bcrypt/bcrypt.module';
 import { CartsModule } from './carts/carts.module';
+import { CommentsModule } from './comments/comments.module';
 
 @Module({
   imports: [
@@ -28,6 +29,7 @@ import { CartsModule } from './carts/carts.module';
     AuthModule,
     BcryptModule,
     CartsModule,
+    CommentsModule,
   ],
   controllers: [AppController],
   providers: [AppService],
