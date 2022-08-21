@@ -7,8 +7,11 @@ import { ShowroomsModule } from './showrooms/showrooms.module';
 import { MongooseModule } from '@nestjs/mongoose';
 import { ConfigModule } from '@nestjs/config';
 import { CatalogsModule } from './catalogs/catalogs.module';
-import { APP_GUARD } from '@nestjs/core';
-import { RoleGuard } from './guards/role.guard';
+import { UsersModule } from './users/users.module';
+import { AuthModule } from './auth/auth.module';
+import { BcryptModule } from './bcrypt/bcrypt.module';
+import { CartsModule } from './carts/carts.module';
+import { CommentsModule } from './comments/comments.module';
 
 @Module({
   imports: [
@@ -22,14 +25,13 @@ import { RoleGuard } from './guards/role.guard';
     CategoriesModule,
     ShowroomsModule,
     CatalogsModule,
+    UsersModule,
+    AuthModule,
+    BcryptModule,
+    CartsModule,
+    CommentsModule,
   ],
   controllers: [AppController],
-  providers: [
-    AppService,
-    {
-      provide: APP_GUARD,
-      useClass: RoleGuard,
-    },
-  ],
+  providers: [AppService],
 })
 export class AppModule {}

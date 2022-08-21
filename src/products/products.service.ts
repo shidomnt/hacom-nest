@@ -14,9 +14,22 @@ export class ProductsService {
     private queriesService: QueriesService,
   ) {}
 
-  create(createProductDto: CreateProductDto) {
+  async create(createProductDto: CreateProductDto) {
     const createdProduct = new this.productModel(createProductDto);
-    return createdProduct.save();
+    try {
+      await createdProduct.save();
+      return {
+        success: true,
+        message: '',
+      };
+    } catch (e) {
+      if (e instanceof Error) {
+        return {
+          success: false,
+          message: e.message,
+        };
+      }
+    }
   }
 
   textSearch(searchString: string) {

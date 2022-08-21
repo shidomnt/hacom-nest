@@ -6,7 +6,7 @@ export type ProductDocument = Product & Document;
 
 @Schema({ timestamps: true })
 export class Product {
-  @Prop()
+  @Prop({ required: true, unique: true })
   id: string;
 
   @Prop()
@@ -65,7 +65,4 @@ export class Product {
   danhgia: Record<string, Array<string>>;
 }
 
-export const ProductSchema = SchemaFactory.createForClass(Product).index({
-  name: 'text',
-  id: 'text',
-});
+export const ProductSchema = SchemaFactory.createForClass(Product);
