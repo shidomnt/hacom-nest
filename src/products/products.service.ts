@@ -48,7 +48,7 @@ export class ProductsService {
   }
 
   async findAll(query: Partial<QueryProduct>) {
-    const products = this.productModel.find({});
+    const products = this.productModel.find({}).populate('category');
     const result = await this.queriesService.handleQuery(products, query);
     return result;
   }
